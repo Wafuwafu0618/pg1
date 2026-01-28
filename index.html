@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CaffeineCalc</title>
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="app-title"><img src="img/title.png" alt="CaffeineCalc" class="title-logo"></h1>
+        </header>
+
+        <section class="status-card" id="status-card">
+            <h3 class="status-title">今日の摂取量</h3>
+            <div class="status-value-wrapper">
+                <span class="status-value" id="today-total">0</span>
+                <span class="status-unit">mg</span>
+                <span class="status-limit">/ 400 mg</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p class="status-message" id="status-message">安全圏内です</p>
+        </section>
+
+        <section class="input-area">
+            <div class="input-group">
+                <input type="text" id="drink-name" class="input-field" placeholder="内容 (例: コーヒー)">
+                <input type="number" id="caffeine-amount" class="input-field" placeholder="カフェイン (mg)">
+            </div>
+            <button id="add-btn" class="btn btn-primary">記録する</button>
+        </section>
+
+        <section class="list-area">
+            <div class="list-header">
+                <h2 class="list-title">記録一覧</h2>
+                <p id="total-count" class="list-count">(0件)</p>
+            </div>
+            <div id="record-list" class="record-list">
+                <p class="empty-state">まだ記録はありません</p>
+            </div>
+        </section>
+    </div>
+    <small class="signature">2501353 小柳智紀</small>
+</body>
+
+</html>
