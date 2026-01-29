@@ -127,16 +127,16 @@ document.addEventListener("DOMContentLoaded", function () {
             let dateStr = year + "/" + month + "/" + day + " " + hour + ":" + min;
 
             item.innerHTML =
-                '<div class="record-info">' +
-                '<div class="record-main">' +
-                '<strong class="record-name">' + record.name + '</strong>' +
-                '<span class="record-amount">' + record.amount + ' mg</span>' +
-                '</div>' +
-                '<span class="record-date">' + dateStr + '</span>' +
-                '</div>' +
-                '<div class="record-actions">' +
-                '<button class="btn btn-icon delete-btn">✖</button>' +
-                '</div>';
+                "<div class='record-info'>" +
+                "<div class='record-main'>" +
+                "<strong class='record-name'>" + record.name + "</strong>" +
+                "<span class='record-amount'>" + record.amount + " mg</span>" +
+                "</div>" +
+                "<span class='record-date'>" + dateStr + "</span>" +
+                "</div>" +
+                "<div class='record-actions'>" +
+                "<button class='btn btn-icon delete-btn'>✖</button>" +
+                "</div>";
 
             let deleteBtn = item.querySelector(".delete-btn");
             if (deleteBtn) {
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (records.length == 0) {
-            list.innerHTML = '<p class="empty-state">まだ記録はありません</p>';
+            list.innerHTML = "<p class='empty-state'>まだ記録はありません</p>";
         }
 
         let totalCountEl = document.getElementById("total-count");
