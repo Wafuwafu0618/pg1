@@ -50,19 +50,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 20);
     }
 
-    // 記録の削除
     function deleteRecord(id) {
         if (confirm("本当に削除しますか？")) {
-            //削除対象の要素を探す
             let items = document.querySelectorAll(".record-item");
             for (let i = 0; i < items.length; i++) {
                 let item = items[i];
                 if (item.dataset.id == id) {
-                    //フェードアウトしてから削除
                     fadeOut(item, function () {
                         for (let j = 0; j < records.length; j++) {
                             if (records[j].id == id) {
-                                //見つけたら削除
                                 records.splice(j, 1);
                                 break;
                             }
@@ -85,7 +81,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let total = 0;
 
-        //全ての記録をループして今日の分を合計
         for (let i = 0; i < records.length; i++) {
             let rd = new Date(records[i].date);
             let ry = rd.getFullYear();
@@ -93,7 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
             let rd_day = rd.getDate();
             let recordDateStr = ry + "-" + rm + "-" + rd_day;
 
-            // 日付が一致したら合計に加算
             if (recordDateStr == todayStr) {
                 total += parseInt(records[i].amount);
             }
@@ -101,30 +95,25 @@ document.addEventListener("DOMContentLoaded", function () {
         return total;
     }
 
-    // 記録を表示する関数
     function displayRecords() {
 
-        // ローカルストレージに保存
         let jsonStr = JSON.stringify(records);
         localStorage.setItem("caffeineRecords", jsonStr);
 
-        // リスト要素を取得してクリア
         let list = document.getElementById("record-list");
         list.innerHTML = "";
 
-        // 日付順にソート(新しい順)
+        //日付順にソート(新しい順)
         records.sort(function (a, b) {
             return new Date(b.date) - new Date(a.date);
         });
 
-        // 各記録を表示
         for (let i = 0; i < records.length; i++) {
             let record = records[i];
             let item = document.createElement("div");
             item.className = "record-item";
             item.dataset.id = record.id;
 
-            // 日付と時刻をフォーマット
             let d = new Date(record.date);
             let year = d.getFullYear();
             let month = d.getMonth() + 1;
@@ -132,13 +121,11 @@ document.addEventListener("DOMContentLoaded", function () {
             let hour = d.getHours();
             let min = d.getMinutes();
 
-            // 1桁の場合の0付与
             if (min < 10) min = "0" + min;
             if (hour < 10) hour = "0" + hour;
 
             let dateStr = year + "/" + month + "/" + day + " " + hour + ":" + min;
 
-            //HTML作成
             item.innerHTML =
                 '<div class="record-info">' +
                 '<div class="record-main">' +
@@ -151,7 +138,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 '<button class="btn btn-icon delete-btn">✖</button>' +
                 '</div>';
 
-            //削除ボタンにクリックイベントを設定
             let deleteBtn = item.querySelector(".delete-btn");
             if (deleteBtn) {
                 deleteBtn.addEventListener("click", function () {
@@ -159,36 +145,30 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
 
-            //リストに追加してアニメーション
             list.appendChild(item);
             fadeIn(item);
         }
 
-        //記録がない場合のメッセージ
         if (records.length == 0) {
             list.innerHTML = '<p class="empty-state">まだ記録はありません</p>';
         }
 
-        //各要素を取得
         let totalCountEl = document.getElementById("total-count");
         let todayTotalEl = document.getElementById("today-total");
         let progressFill = document.getElementById("progress-fill");
         let statusMessage = document.getElementById("status-message");
         let statusCard = document.getElementById("status-card");
 
-        //件数を表示
         if (totalCountEl) {
             totalCountEl.textContent = "(" + records.length + "件)";
         }
 
-        //今日の合計を取得して表示
         let todayAmount = getTodayTotal();
 
         if (todayTotalEl) {
             todayTotalEl.textContent = todayAmount;
         }
 
-        //バーの割合計算
         let percentage = (todayAmount / DAILY_LIMIT) * 100;
         if (percentage > 100) percentage = 100;
 
@@ -196,7 +176,6 @@ document.addEventListener("DOMContentLoaded", function () {
             animateProgressBar(progressFill, percentage);
         }
 
-        // 上限を超えたときの警告
         if (todayAmount > DAILY_LIMIT) {
             statusCard.classList.add("status-warning");
             if (progressFill) progressFill.style.backgroundColor = "#e57373";
@@ -220,11 +199,9 @@ document.addEventListener("DOMContentLoaded", function () {
             let name = nameInput.value;
             let amount = amountInput.value;
 
-            // 両方入力されている場合
             if (name && amount) {
                 let now = new Date();
 
-                // 新しい記録オブジェクトを作成
                 let newRecord = {
                     id: new Date().getTime(),
                     date: now.toString(),
@@ -232,19 +209,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     amount: amount
                 };
 
-                // 配列に追加
                 records.push(newRecord);
 
-                // 画面を更新
                 displayRecords();
 
-                // 上限を超えた場合はアラート
                 let currentTodayAmount = getTodayTotal();
                 if (currentTodayAmount > DAILY_LIMIT) {
                     alert("本日の摂取量(" + currentTodayAmount + "mg)が目安を超えました。");
                 }
 
-                // 入力欄をクリア
                 nameInput.value = "";
                 amountInput.value = "";
             } else {
